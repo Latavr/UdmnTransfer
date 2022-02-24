@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdmnTransfer", "UdmnTransfer\UdmnTransfer.csproj", "{241D8A16-2BC5-4405-A27A-A862D7C0996C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{241D8A16-2BC5-4405-A27A-A862D7C0996C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241D8A16-2BC5-4405-A27A-A862D7C0996C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241D8A16-2BC5-4405-A27A-A862D7C0996C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241D8A16-2BC5-4405-A27A-A862D7C0996C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7839822E-F0F6-4501-80AD-27703D479595}
+	EndGlobalSection
+EndGlobal
