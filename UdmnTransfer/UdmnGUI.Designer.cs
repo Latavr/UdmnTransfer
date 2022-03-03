@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.checkCOMPort = new System.Windows.Forms.Button();
-            this.checTypePackage = new System.Windows.Forms.Button();
+            this.checkTypePackage = new System.Windows.Forms.Button();
             this.listCOMPorts = new System.Windows.Forms.ComboBox();
             this.typePackage = new System.Windows.Forms.ComboBox();
             this.leftPanel = new System.Windows.Forms.RichTextBox();
@@ -50,14 +50,15 @@
             this.checkCOMPort.Text = "Выбрать порт";
             this.checkCOMPort.UseVisualStyleBackColor = true;
             // 
-            // checTypePackage
+            // checkTypePackage
             // 
-            this.checTypePackage.Location = new System.Drawing.Point(12, 52);
-            this.checTypePackage.Name = "checTypePackage";
-            this.checTypePackage.Size = new System.Drawing.Size(109, 23);
-            this.checTypePackage.TabIndex = 1;
-            this.checTypePackage.Text = "Тип пакет";
-            this.checTypePackage.UseVisualStyleBackColor = true;
+            this.checkTypePackage.Location = new System.Drawing.Point(12, 52);
+            this.checkTypePackage.Name = "checkTypePackage";
+            this.checkTypePackage.Size = new System.Drawing.Size(109, 23);
+            this.checkTypePackage.TabIndex = 1;
+            this.checkTypePackage.Text = "Тип пакет";
+            this.checkTypePackage.UseVisualStyleBackColor = true;
+            this.checkTypePackage.Click += new System.EventHandler(this.CheckTypePackage_Click);
             // 
             // listCOMPorts
             // 
@@ -66,6 +67,7 @@
             this.listCOMPorts.Name = "listCOMPorts";
             this.listCOMPorts.Size = new System.Drawing.Size(121, 23);
             this.listCOMPorts.TabIndex = 2;
+            this.listCOMPorts.VisibleChanged += new System.EventHandler(this.ListCOMPorts_Load);
             // 
             // typePackage
             // 
@@ -74,6 +76,7 @@
             this.typePackage.Name = "typePackage";
             this.typePackage.Size = new System.Drawing.Size(121, 23);
             this.typePackage.TabIndex = 3;
+            this.typePackage.VisibleChanged += new System.EventHandler(this.ListTypePackage_Load);
             // 
             // leftPanel
             // 
@@ -104,6 +107,7 @@
             this.sendRequest.TabIndex = 6;
             this.sendRequest.Text = "Послать запрос";
             this.sendRequest.UseVisualStyleBackColor = true;
+            this.sendRequest.Click += new System.EventHandler(this.SendRequest_Click);
             // 
             // packageRequest
             // 
@@ -112,6 +116,7 @@
             this.packageRequest.Name = "packageRequest";
             this.packageRequest.Size = new System.Drawing.Size(236, 23);
             this.packageRequest.TabIndex = 7;
+            this.packageRequest.VisibleChanged += new System.EventHandler(this.TypePackageRequest_Load);
             // 
             // headerRequest
             // 
@@ -132,6 +137,7 @@
             this.typeData.TabIndex = 9;
             this.typeData.Text = "Тип данных";
             this.typeData.UseVisualStyleBackColor = true;
+            this.typeData.Click += new System.EventHandler(this.CheckTypeData_Click);
             // 
             // listTypeData
             // 
@@ -140,6 +146,7 @@
             this.listTypeData.Name = "listTypeData";
             this.listTypeData.Size = new System.Drawing.Size(121, 23);
             this.listTypeData.TabIndex = 10;
+            this.listTypeData.VisibleChanged += new System.EventHandler(this.ListTypeData_Load);
             // 
             // Udmn
             // 
@@ -155,7 +162,7 @@
             this.Controls.Add(this.leftPanel);
             this.Controls.Add(this.typePackage);
             this.Controls.Add(this.listCOMPorts);
-            this.Controls.Add(this.checTypePackage);
+            this.Controls.Add(this.checkTypePackage);
             this.Controls.Add(this.checkCOMPort);
             this.Name = "Udmn";
             this.Text = "УДМН-100";
@@ -167,7 +174,7 @@
         #endregion
 
         private Button checkCOMPort;
-        private Button checTypePackage;
+        private Button checkTypePackage;
         private Button sendRequest;
         private ComboBox listCOMPorts;
         private ComboBox typePackage;
