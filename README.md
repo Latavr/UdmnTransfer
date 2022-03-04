@@ -1,15 +1,4 @@
-<style>
-.head 
-{ 
-    color: #ffcc; 
-}
-.text
-{
-    color: #12f45c;
-}
-</style>
-
-<H1 align="center"><span class="head">UDMN Transfer</span></H1>
+<H1 align="center">UDMN Transfer</H1>
 
 ## Этот проект является учебной практикой. ##
 
@@ -19,5 +8,5 @@
 - ### Отображать полученные данные в виде графика. ###
 ---
 ---
-## Весь проект будет разрабатываеться в ветке <span class="text">**develop**</span>. ##
+## Весь проект будет разрабатываеться в ветке **develop**. ##
     
