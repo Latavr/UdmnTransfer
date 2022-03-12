@@ -29,16 +29,21 @@
         private void InitializeComponent()
         {
             this.checkCOMPort = new System.Windows.Forms.Button();
-            this.checkTypePackage = new System.Windows.Forms.Button();
             this.listCOMPorts = new System.Windows.Forms.ComboBox();
-            this.typePackage = new System.Windows.Forms.ComboBox();
+            this.listTypePackage = new System.Windows.Forms.ComboBox();
             this.leftPanel = new System.Windows.Forms.RichTextBox();
             this.rightPanel = new System.Windows.Forms.RichTextBox();
             this.sendRequest = new System.Windows.Forms.Button();
             this.packageRequest = new System.Windows.Forms.TextBox();
             this.headerRequest = new System.Windows.Forms.Label();
-            this.typeData = new System.Windows.Forms.Button();
             this.listTypeData = new System.Windows.Forms.ComboBox();
+            this.listIndex = new System.Windows.Forms.ComboBox();
+            this.indexData = new System.Windows.Forms.Label();
+            this.generateRequest = new System.Windows.Forms.Button();
+            this.dataRequest = new System.Windows.Forms.Label();
+            this.listDataRequest = new System.Windows.Forms.TextBox();
+            this.typeData = new System.Windows.Forms.Label();
+            this.typePackage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // checkCOMPort
@@ -50,16 +55,6 @@
             this.checkCOMPort.Text = "Выбрать порт";
             this.checkCOMPort.UseVisualStyleBackColor = true;
             // 
-            // checkTypePackage
-            // 
-            this.checkTypePackage.Location = new System.Drawing.Point(12, 52);
-            this.checkTypePackage.Name = "checkTypePackage";
-            this.checkTypePackage.Size = new System.Drawing.Size(109, 23);
-            this.checkTypePackage.TabIndex = 1;
-            this.checkTypePackage.Text = "Тип пакет";
-            this.checkTypePackage.UseVisualStyleBackColor = true;
-            this.checkTypePackage.Click += new System.EventHandler(this.CheckTypePackage_Click);
-            // 
             // listCOMPorts
             // 
             this.listCOMPorts.FormattingEnabled = true;
@@ -69,19 +64,19 @@
             this.listCOMPorts.TabIndex = 2;
             this.listCOMPorts.VisibleChanged += new System.EventHandler(this.ListCOMPorts_Load);
             // 
-            // typePackage
+            // listTypePackage
             // 
-            this.typePackage.FormattingEnabled = true;
-            this.typePackage.Location = new System.Drawing.Point(127, 52);
-            this.typePackage.Name = "typePackage";
-            this.typePackage.Size = new System.Drawing.Size(121, 23);
-            this.typePackage.TabIndex = 3;
-            this.typePackage.VisibleChanged += new System.EventHandler(this.ListTypePackage_Load);
+            this.listTypePackage.FormattingEnabled = true;
+            this.listTypePackage.Location = new System.Drawing.Point(127, 52);
+            this.listTypePackage.Name = "listTypePackage";
+            this.listTypePackage.Size = new System.Drawing.Size(121, 23);
+            this.listTypePackage.TabIndex = 3;
+            this.listTypePackage.VisibleChanged += new System.EventHandler(this.ListTypePackage_Load);
             // 
             // leftPanel
             // 
             this.leftPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.leftPanel.Location = new System.Drawing.Point(12, 225);
+            this.leftPanel.Location = new System.Drawing.Point(12, 406);
             this.leftPanel.MinimumSize = new System.Drawing.Size(384, 286);
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Size = new System.Drawing.Size(384, 300);
@@ -91,7 +86,7 @@
             // rightPanel
             // 
             this.rightPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.rightPanel.Location = new System.Drawing.Point(403, 225);
+            this.rightPanel.Location = new System.Drawing.Point(403, 406);
             this.rightPanel.MinimumSize = new System.Drawing.Size(384, 286);
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.Size = new System.Drawing.Size(384, 300);
@@ -101,9 +96,10 @@
             // sendRequest
             // 
             this.sendRequest.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.sendRequest.Location = new System.Drawing.Point(12, 196);
+            this.sendRequest.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.sendRequest.Location = new System.Drawing.Point(12, 376);
             this.sendRequest.Name = "sendRequest";
-            this.sendRequest.Size = new System.Drawing.Size(109, 23);
+            this.sendRequest.Size = new System.Drawing.Size(128, 24);
             this.sendRequest.TabIndex = 6;
             this.sendRequest.Text = "Послать запрос";
             this.sendRequest.UseVisualStyleBackColor = true;
@@ -111,8 +107,7 @@
             // 
             // packageRequest
             // 
-            this.packageRequest.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.packageRequest.Location = new System.Drawing.Point(12, 167);
+            this.packageRequest.Location = new System.Drawing.Point(12, 241);
             this.packageRequest.Name = "packageRequest";
             this.packageRequest.Size = new System.Drawing.Size(236, 23);
             this.packageRequest.TabIndex = 7;
@@ -120,24 +115,13 @@
             // 
             // headerRequest
             // 
-            this.headerRequest.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.headerRequest.AutoSize = true;
             this.headerRequest.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.headerRequest.Location = new System.Drawing.Point(12, 147);
+            this.headerRequest.Location = new System.Drawing.Point(12, 221);
             this.headerRequest.Name = "headerRequest";
             this.headerRequest.Size = new System.Drawing.Size(128, 17);
             this.headerRequest.TabIndex = 8;
             this.headerRequest.Text = "Заголовок запроса";
-            // 
-            // typeData
-            // 
-            this.typeData.Location = new System.Drawing.Point(12, 92);
-            this.typeData.Name = "typeData";
-            this.typeData.Size = new System.Drawing.Size(109, 23);
-            this.typeData.TabIndex = 9;
-            this.typeData.Text = "Тип данных";
-            this.typeData.UseVisualStyleBackColor = true;
-            this.typeData.Click += new System.EventHandler(this.CheckTypeData_Click);
             // 
             // listTypeData
             // 
@@ -148,21 +132,94 @@
             this.listTypeData.TabIndex = 10;
             this.listTypeData.VisibleChanged += new System.EventHandler(this.ListTypeData_Load);
             // 
+            // listIndex
+            // 
+            this.listIndex.FormattingEnabled = true;
+            this.listIndex.Location = new System.Drawing.Point(127, 130);
+            this.listIndex.Name = "listIndex";
+            this.listIndex.Size = new System.Drawing.Size(121, 23);
+            this.listIndex.TabIndex = 11;
+            this.listIndex.VisibleChanged += new System.EventHandler(this.Index_Load);
+            // 
+            // indexData
+            // 
+            this.indexData.AutoSize = true;
+            this.indexData.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.indexData.Location = new System.Drawing.Point(14, 131);
+            this.indexData.Name = "indexData";
+            this.indexData.Size = new System.Drawing.Size(107, 17);
+            this.indexData.TabIndex = 12;
+            this.indexData.Text = "Индекс данных";
+            // 
+            // generateRequest
+            // 
+            this.generateRequest.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.generateRequest.Location = new System.Drawing.Point(14, 182);
+            this.generateRequest.Name = "generateRequest";
+            this.generateRequest.Size = new System.Drawing.Size(234, 27);
+            this.generateRequest.TabIndex = 13;
+            this.generateRequest.Text = "Сформировать запрос";
+            this.generateRequest.UseVisualStyleBackColor = true;
+            this.generateRequest.Click += new System.EventHandler(this.GenerateRequest_Click);
+            // 
+            // dataRequest
+            // 
+            this.dataRequest.AutoSize = true;
+            this.dataRequest.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.dataRequest.Location = new System.Drawing.Point(12, 281);
+            this.dataRequest.Name = "dataRequest";
+            this.dataRequest.Size = new System.Drawing.Size(113, 17);
+            this.dataRequest.TabIndex = 14;
+            this.dataRequest.Text = "Данные запроса";
+            // 
+            // listDataRequest
+            // 
+            this.listDataRequest.Location = new System.Drawing.Point(12, 301);
+            this.listDataRequest.Name = "listDataRequest";
+            this.listDataRequest.Size = new System.Drawing.Size(109, 23);
+            this.listDataRequest.TabIndex = 15;
+            this.listDataRequest.VisibleChanged += new System.EventHandler(this.Index_Load);
+            // 
+            // typeData
+            // 
+            this.typeData.AutoSize = true;
+            this.typeData.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.typeData.Location = new System.Drawing.Point(14, 95);
+            this.typeData.Name = "typeData";
+            this.typeData.Size = new System.Drawing.Size(84, 17);
+            this.typeData.TabIndex = 16;
+            this.typeData.Text = "Тип данных";
+            // 
+            // typePackage
+            // 
+            this.typePackage.AutoSize = true;
+            this.typePackage.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.typePackage.Location = new System.Drawing.Point(14, 55);
+            this.typePackage.Name = "typePackage";
+            this.typePackage.Size = new System.Drawing.Size(77, 17);
+            this.typePackage.TabIndex = 17;
+            this.typePackage.Text = "Тип пакета";
+            // 
             // Udmn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 590);
-            this.Controls.Add(this.listTypeData);
+            this.ClientSize = new System.Drawing.Size(799, 953);
+            this.Controls.Add(this.typePackage);
             this.Controls.Add(this.typeData);
+            this.Controls.Add(this.listDataRequest);
+            this.Controls.Add(this.dataRequest);
+            this.Controls.Add(this.generateRequest);
+            this.Controls.Add(this.indexData);
+            this.Controls.Add(this.listIndex);
+            this.Controls.Add(this.listTypeData);
             this.Controls.Add(this.headerRequest);
             this.Controls.Add(this.packageRequest);
             this.Controls.Add(this.sendRequest);
             this.Controls.Add(this.rightPanel);
             this.Controls.Add(this.leftPanel);
-            this.Controls.Add(this.typePackage);
+            this.Controls.Add(this.listTypePackage);
             this.Controls.Add(this.listCOMPorts);
-            this.Controls.Add(this.checkTypePackage);
             this.Controls.Add(this.checkCOMPort);
             this.Name = "Udmn";
             this.Text = "УДМН-100";
@@ -174,15 +231,20 @@
         #endregion
 
         private Button checkCOMPort;
-        private Button checkTypePackage;
         private Button sendRequest;
         private ComboBox listCOMPorts;
-        private ComboBox typePackage;
+        private ComboBox listTypePackage;
         private RichTextBox leftPanel;
         private RichTextBox rightPanel;
         private TextBox packageRequest;
         private Label headerRequest;
-        private Button typeData;
         private ComboBox listTypeData;
+        private ComboBox listIndex;
+        private Label indexData;
+        private Button generateRequest;
+        private Label dataRequest;
+        private TextBox listDataRequest;
+        private Label typeData;
+        private Label typePackage;
     }
 }
