@@ -1,27 +1,26 @@
-﻿using System.Text;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 
 namespace UdmnTransfer
 {
     public class COMPorts
     {
         
-        private SerialPort port = new SerialPort();
+        public SerialPort port;
+        public delegate void Delegat1();
+        public Delegat1 delegat1;
 
-        public string[] PortsNames()
+        public void Property(string portName)
         {
-            string[] ports = SerialPort.GetPortNames();
-            return ports;
-        }
-        /*
-        public void Property()
-        {
+            port.PortName = portName;
             port.BaudRate = 9600;
             port.Parity = Parity.None;
             port.DataBits = 8;
             port.StopBits = StopBits.One;
-            port.ReadTimeout = -1;
-
+            port.WriteTimeout = 500;
+            port.ReadTimeout = 500;
+        }
+        
+        /*
             port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
         }
 

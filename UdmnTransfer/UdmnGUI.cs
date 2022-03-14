@@ -1,3 +1,6 @@
+using System.IO.Ports;
+
+
 namespace UdmnTransfer
 {
     public partial class Udmn : System.Windows.Forms.Form
@@ -13,30 +16,79 @@ namespace UdmnTransfer
         private byte typePackToDevice;
         private byte typeDataInterfaceToDevice;
         private byte indexValueToDevice;
+        private string[] portName = new string[20];
 
         public Udmn()
         {
             InitializeComponent();
+            comPorts.port = new SerialPort();
+            comPorts.port.DataReceived += new SerialDataReceivedEventHandler(DataRecievedHandler);
+            comPorts.delegat1 = EnterReceived;
+
         }
-        
+
+        private void DataRecievedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            rightPanel.Invoke(comPorts.delegat1);
+        }
+
+        public void EnterReceived()
+        {
+            AddedInPanel(rightPanel, comPorts.port.ReadByte().ToString("X") + " ");
+        }
+
+        private void AddedInPanel(RichTextBox RichTextBox, string Text)
+        {
+            var StartIndex = RichTextBox.TextLength;
+            RichTextBox.AppendText(Text);
+            var EndIndex = RichTextBox.TextLength;
+            RichTextBox.Select(StartIndex, EndIndex - StartIndex);
+        }
+
+
         // Поле для выбора доступных COM портов
         private void ListCOMPorts_Load(object sender, EventArgs e)
         {
             listCOMPorts.Items.Clear();
-            listCOMPorts.Items.AddRange(comPorts.PortsNames());
+            portName = SerialPort.GetPortNames();
+            listCOMPorts.Items.AddRange(portName);
             listCOMPorts.SelectedIndex = 0;
         }
 
-        /*
+        // Выбрать COM порт и установить/разорвать соединение
         private void CheckCOMPort_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            while (listCOMPorts.SelectedIndex != i)
+            int index = listCOMPorts.SelectedIndex;
+
+            if(comPorts.port.IsOpen)
             {
-                i++;
+                comPorts.port.Close();
+                rightPanel.Text += "Соединение разорвано \n";
+            }
+            else
+            {
+                try
+                {
+                    comPorts.Property(portName[index]);
+                    /*
+                    comPorts.port.PortName = portName[index];
+                    comPorts.port.BaudRate = 9600;
+                    comPorts.port.Parity = Parity.None;
+                    comPorts.port.DataBits = 8;
+                    comPorts.port.StopBits = StopBits.One;
+                    comPorts.port.WriteTimeout = 500;
+                    comPorts.port.ReadTimeout = 500;
+                    */
+                    comPorts.port.Open();
+                    rightPanel.Text += "Соединение установлено \n";
+                    comPorts.port.Write("Ура получилось!");
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("Ошибка подключения: \n" + exc.Message);
+                }
             }
         }
-        */
 
         // Поле для выбора типа пакета - п. 1.2 в описании протокола DiBus
         private void ListTypePackage_Load(object sender, EventArgs e)
@@ -52,13 +104,9 @@ namespace UdmnTransfer
         // Выбор типа пакета
         private void CheckTypePackage_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            while (listTypePackage.SelectedIndex != i)
-            {
-                i++;
-            }
-            packageRequest.Text += (Convert.ToString(typePack[i].ToString("X2")) + ".");
-            typePackToDevice = typePack[i];
+            int index = listTypePackage.SelectedIndex;
+            packageRequest.Text += (Convert.ToString(typePack[index].ToString("X2")) + ".");
+            typePackToDevice = typePack[index];
         }
 
 
@@ -76,13 +124,9 @@ namespace UdmnTransfer
         // Выбор типа данных
         private void CheckTypeData_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            while (listTypeData.SelectedIndex != i)
-            {
-                i++;
-            }
-            packageRequest.Text += Convert.ToString(typeDataInterface[i].ToString("X2"));
-            typeDataInterfaceToDevice = typeDataInterface[i];
+            int index = listTypeData.SelectedIndex;
+            packageRequest.Text += Convert.ToString(typeDataInterface[index].ToString("X2"));
+            typeDataInterfaceToDevice = typeDataInterface[index];
         }
 
         // Добавление в поле "Заголовок запроса" адресов получателя и отправителя
@@ -106,13 +150,9 @@ namespace UdmnTransfer
         // Выбор индекса данных
         private void ListIndex_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            while (listIndex.SelectedIndex != i)
-            {
-                i++;
-            }
-            listDataRequest.Text += Convert.ToString(indexValue[i].ToString("X2"));
-            indexValueToDevice = indexValue[i];
+            int index = listIndex.SelectedIndex;
+            listDataRequest.Text += Convert.ToString(indexValue[index].ToString("X2"));
+            indexValueToDevice = indexValue[index];
         }
 
         // Кнопка "Сформировать запрос" распределяющая выбранные параметры
@@ -141,7 +181,7 @@ namespace UdmnTransfer
         // Размер данных
         private string SizeData()
         {
-            byte[] sizeData = new byte[2] { 0x00, 0x00 };
+            byte[] sizeData = new byte[] { 0x00, 0x00 };
             byte index = 0;
             string result = "";
             for (int i = 0; i < listDataRequest.Text.Length; i++)

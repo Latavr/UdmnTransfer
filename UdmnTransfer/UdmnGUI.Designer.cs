@@ -52,8 +52,9 @@
             this.checkCOMPort.Name = "checkCOMPort";
             this.checkCOMPort.Size = new System.Drawing.Size(109, 23);
             this.checkCOMPort.TabIndex = 0;
-            this.checkCOMPort.Text = "Выбрать порт";
+            this.checkCOMPort.Text = "Соединение";
             this.checkCOMPort.UseVisualStyleBackColor = true;
+            this.checkCOMPort.Click += new System.EventHandler(this.CheckCOMPort_Click);
             // 
             // listCOMPorts
             // 
