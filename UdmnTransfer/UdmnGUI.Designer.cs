@@ -48,12 +48,14 @@
             // 
             // checkCOMPort
             // 
+            this.checkCOMPort.BackColor = System.Drawing.SystemColors.Control;
+            this.checkCOMPort.ForeColor = System.Drawing.SystemColors.ControlText;
             this.checkCOMPort.Location = new System.Drawing.Point(12, 12);
             this.checkCOMPort.Name = "checkCOMPort";
             this.checkCOMPort.Size = new System.Drawing.Size(109, 23);
             this.checkCOMPort.TabIndex = 0;
             this.checkCOMPort.Text = "Соединение";
-            this.checkCOMPort.UseVisualStyleBackColor = true;
+            this.checkCOMPort.UseVisualStyleBackColor = false;
             this.checkCOMPort.Click += new System.EventHandler(this.CheckCOMPort_Click);
             // 
             // listCOMPorts
@@ -76,29 +78,31 @@
             // 
             // leftPanel
             // 
-            this.leftPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.leftPanel.Location = new System.Drawing.Point(12, 406);
+            this.leftPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.leftPanel.Location = new System.Drawing.Point(9, 386);
             this.leftPanel.MinimumSize = new System.Drawing.Size(384, 286);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(384, 300);
+            this.leftPanel.Size = new System.Drawing.Size(384, 469);
             this.leftPanel.TabIndex = 4;
             this.leftPanel.Text = "";
             // 
             // rightPanel
             // 
-            this.rightPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.rightPanel.Location = new System.Drawing.Point(403, 406);
+            this.rightPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rightPanel.Location = new System.Drawing.Point(397, 386);
             this.rightPanel.MinimumSize = new System.Drawing.Size(384, 286);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(384, 300);
+            this.rightPanel.Size = new System.Drawing.Size(561, 468);
             this.rightPanel.TabIndex = 5;
             this.rightPanel.Text = "";
             // 
             // sendRequest
             // 
-            this.sendRequest.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.sendRequest.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.sendRequest.Location = new System.Drawing.Point(12, 376);
+            this.sendRequest.Location = new System.Drawing.Point(10, 349);
             this.sendRequest.Name = "sendRequest";
             this.sendRequest.Size = new System.Drawing.Size(128, 24);
             this.sendRequest.TabIndex = 6;
@@ -112,7 +116,6 @@
             this.packageRequest.Name = "packageRequest";
             this.packageRequest.Size = new System.Drawing.Size(236, 23);
             this.packageRequest.TabIndex = 7;
-            this.packageRequest.VisibleChanged += new System.EventHandler(this.TypePackageRequest_Load);
             // 
             // headerRequest
             // 
@@ -205,7 +208,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 953);
+            this.ClientSize = new System.Drawing.Size(967, 865);
             this.Controls.Add(this.typePackage);
             this.Controls.Add(this.typeData);
             this.Controls.Add(this.listDataRequest);

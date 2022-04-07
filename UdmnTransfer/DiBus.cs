@@ -1,7 +1,41 @@
-﻿namespace UdmnTransfer
+﻿using System.Numerics;
+using System.Buffers.Binary;
+using System.Text;
+
+namespace UdmnTransfer
 {
     public class DiBus
     {
+        public string CalculateCRC(string headOrData)
+        {
+            string[] headOrDataSplit = headOrData.Split(' ');
+            string reverCRC = "";
+            string resultCalculateCRC = "";
+            uint CRC = 0;
+            int index = 0;
+
+            if ((headOrDataSplit.Length - 1) % 2 == 1)
+            {
+                CRC ^= (uint)Convert.ToInt32(headOrDataSplit[index], 16);
+                index++;
+            }
+            while (index < (headOrDataSplit.Length - 1))
+            {
+                CRC = BitOperations.RotateLeft(CRC, 5);
+                CRC ^= (((uint)Convert.ToInt32(headOrDataSplit[index], 16) << 8) + (uint)Convert.ToInt32(headOrDataSplit[index + 1], 16));
+                index += 2;
+            }
+            CRC = BinaryPrimitives.ReverseEndianness(CRC);
+            reverCRC = Convert.ToString(CRC, 16);
+
+            for (int i = 0; i < (reverCRC.Length - 1); i += 2)
+            {
+                resultCalculateCRC += ("" + reverCRC[i] + reverCRC[i + 1] + " ");
+            }
+            //reverCRC = reverCRC.Replace(" ", string.Empty);
+            //resultCalculateCRC = String.Join(" ", reverCRC.ToCharArray());
+            return resultCalculateCRC;
+        }
         public string UdmnDevice(byte[] addressRecipient, byte[] addressSender, byte typePack, byte typeDataInterface, byte indexValue)
         {
             byte[] addressRecip = new byte[3];
@@ -40,7 +74,6 @@
             {
                 result = errors;
             }
-
             indexVal = indexValue;
 
             return result;
