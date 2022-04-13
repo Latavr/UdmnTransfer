@@ -3,57 +3,55 @@ using System.Buffers.Binary;
 
 namespace UdmnTransfer
 {
-    public partial class Udmn : System.Windows.Forms.Form
+    public partial class Udmn : Form
     {
-        DiBus dibus = new DiBus();
-        COMPorts comPorts = new COMPorts();
+        DiBus dibus = new();
+        COMPorts comPorts = new();
 
-        private byte[] addressRecipient = new byte[] { 0xFF, 0xFF, 0xFF };
-        private byte[] addressSender = new byte[] { 0x01, 0x01, 0x01 };
-        private byte[] typePack = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C };
-        private byte[] typeDataInterface = new byte[] { 0x03, 0x19, 0x21, 0x7D };
-        private byte[] indexValue = new byte[] { 0x54, 0x55, 0x90, 0xFA, 0xFB, 0xFD };
-        //private byte typePackToDevice;
-        //private byte typeDataInterfaceToDevice;
-        //private byte indexValueToDevice;
-        private string[] portName = new string[20];
-        private string sendDataFromDevice = "";
+        private byte[] _packageForSend = new byte[19];
+        private byte[] _addressRecipient = new byte[] { 0xFF, 0xFF, 0xFF };
+        private byte[] _addressSender = new byte[] { 0x01, 0x01, 0x01 };
+        private byte[] _typePackage = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C };
+        private byte[] _typeDataInterface = new byte[] { 0x03, 0x19, 0x21, 0x7D };
+        private byte[] _indexValue = new byte[] { 0x54, 0x55, 0x90, 0xFA, 0xFB, 0xFD };
+        private string[] _portName = new string[20];
+        private string _dataFromDevice = "";
+
+
 
         public Udmn()
         {
             InitializeComponent();
             comPorts.port = new SerialPort();
             comPorts.port.DataReceived += new SerialDataReceivedEventHandler(DataRecievedHandler);
-            comPorts.delegat1 = EnterReceived;
+            //comPorts.transferPortsDelegate = EnterReceived;
 
         }
 
         private void DataRecievedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            rightPanel.Invoke(comPorts.delegat1);
+            //rightPanel.Invoke(comPorts.transferPortsDelegate);
+            //this.Invoke(new EventHandler());
+            this.Invoke(EnterReceived);
         }
 
         public void EnterReceived()
         {
-            //AddedInPanel(rightPanel, comPorts.port.ReadByte().ToString("X") + " ");
-            sendDataFromDevice = comPorts.port.ReadExisting();
+            byte[] getDataFromPort = new byte[comPorts.port.BytesToRead];
+            comPorts.port.Read(getDataFromPort, 0, getDataFromPort.Length);
+
+            for(int i = 0; i < getDataFromPort.Length; i++)
+            {
+                _dataFromDevice += (getDataFromPort[i].ToString("X2") + " ");
+            }
         }
-
-        private void AddedInPanel(RichTextBox RichTextBox, string Text)
-        {
-            var StartIndex = RichTextBox.TextLength;
-            RichTextBox.AppendText(Text);
-            var EndIndex = RichTextBox.TextLength;
-            RichTextBox.Select(StartIndex, EndIndex - StartIndex);
-        }
-
-
+        
         // Поле для выбора доступных COM портов
         private void ListCOMPorts_Load(object sender, EventArgs e)
         {
             listCOMPorts.Items.Clear();
-            portName = SerialPort.GetPortNames();
-            listCOMPorts.Items.AddRange(portName);
+            _portName = SerialPort.GetPortNames();
+            listCOMPorts.Items.AddRange(_portName);
             listCOMPorts.SelectedIndex = 0;
         }
 
@@ -65,26 +63,21 @@ namespace UdmnTransfer
             if(comPorts.port.IsOpen)
             {
                 comPorts.port.Close();
+                checkCOMPort.BackColor = Color.Red;
+                checkCOMPort.Text = "Подключить";
                 rightPanel.Text += "Соединение разорвано \n";
+                leftPanel.Text += "\n";
             }
             else
             {
                 try
                 {
-                    comPorts.Property(portName[index]);
-                    /*
-                    comPorts.port.PortName = portName[index];
-                    comPorts.port.BaudRate = 9600;
-                    comPorts.port.Parity = Parity.None;
-                    comPorts.port.DataBits = 8;
-                    comPorts.port.StopBits = StopBits.One;
-                    comPorts.port.WriteTimeout = 500;
-                    comPorts.port.ReadTimeout = 500;
-                    */
+                    comPorts.Property(_portName[index]);
                     comPorts.port.Open();
-                    rightPanel.Text += "Соединение установлено \n";
-                    SendRequest_Click(generateRequest, e);
-                    //comPorts.port.Write("Hay I did it!");
+                    checkCOMPort.BackColor = Color.Green;
+                    checkCOMPort.Text = "Отключить";
+                    rightPanel.Text += ("Соединение установлено" + "\t" + DateTime.Now.ToString("T") + "\n");
+                    leftPanel.Text += "\n";
                 }
                 catch (Exception exc)
                 {
@@ -102,9 +95,9 @@ namespace UdmnTransfer
         private void ListTypePackage_Load(object sender, EventArgs e)
         {
             listTypePackage.Items.Clear();
-            for (int i = 0; i < typePack.Length; i++)
+            for (int i = 0; i < _typePackage.Length; i++)
             {
-                listTypePackage.Items.Add(Convert.ToString(typePack[i].ToString("X2")));
+                listTypePackage.Items.Add(Convert.ToString(_typePackage[i].ToString("X2")));
             }
             listTypePackage.SelectedIndex = 0;
         }
@@ -113,8 +106,7 @@ namespace UdmnTransfer
         private void CheckTypePackage_Click(object sender, EventArgs e)
         {
             int index = listTypePackage.SelectedIndex;
-            packageRequest.Text += (Convert.ToString(typePack[index].ToString("X2")) + " ");
-            //typePackToDevice = typePack[index];
+            packageRequest.Text += (Convert.ToString(_typePackage[index].ToString("X2")) + " ");
         }
 
 
@@ -122,9 +114,9 @@ namespace UdmnTransfer
         private void ListTypeData_Load(object sender, EventArgs e)
         {
             listTypeData.Items.Clear();
-            for (int i = 0; i < typeDataInterface.Length; i++)
+            for (int i = 0; i < _typeDataInterface.Length; i++)
             {
-                listTypeData.Items.Add(Convert.ToString(typeDataInterface[i].ToString("X2")));
+                listTypeData.Items.Add(Convert.ToString(_typeDataInterface[i].ToString("X2")));
             }
             listTypeData.SelectedIndex = 0;
         }
@@ -133,36 +125,34 @@ namespace UdmnTransfer
         private void CheckTypeData_Click(object sender, EventArgs e)
         {
             int index = listTypeData.SelectedIndex;
-            packageRequest.Text += Convert.ToString(typeDataInterface[index].ToString("X2") + " ");
-            //typeDataInterfaceToDevice = typeDataInterface[index];
+            packageRequest.Text += Convert.ToString(_typeDataInterface[index].ToString("X2") + " ");
         }
 
         // Добавление в поле "Заголовок запроса" адресов получателя и отправителя
         private void TypePackageRequest_Load()
         {
             string address = "";
-            for (int i = 0; i < addressRecipient.Length; i++)
+            for (int i = 0; i < _addressRecipient.Length; i++)
             {
-                address += Convert.ToString(addressRecipient[i].ToString("X2") + " ");
+                address += Convert.ToString(_addressRecipient[i].ToString("X2") + " ");
             }
             packageRequest.Text = address;
             address = "";
-            for (int i = 0; i < addressSender.Length; i++)
+            for (int i = 0; i < _addressSender.Length; i++)
             {
-                address += Convert.ToString(addressSender[i].ToString("X2") + " ");
+                address += Convert.ToString(_addressSender[i].ToString("X2") + " ");
             }
             packageRequest.Text += address;
             //packageRequest.Text = (new string(Convert.ToHexString(addressRecipient)) + " ");
-            //packageRequest.Text += (new string(Convert.ToHexString(addressSender)) + " ");
         }
 
         // Поле индекса данных - таблица А.1 в руководстве по эксплуатации УДМН-100
         private void Index_Load(object sender, EventArgs e)
         {
             listIndex.Items.Clear();
-            for(int i = 0; i < indexValue.Length; i++)
+            for(int i = 0; i < _indexValue.Length; i++)
             {
-                listIndex.Items.Add(Convert.ToString(indexValue[i].ToString("X2")));
+                listIndex.Items.Add(Convert.ToString(_indexValue[i].ToString("X2")));
             }
             listIndex.SelectedIndex = 0;
         }
@@ -171,43 +161,80 @@ namespace UdmnTransfer
         private void ListIndex_Click(object sender, EventArgs e)
         {
             int index = listIndex.SelectedIndex;
-            listDataRequest.Text += Convert.ToString(indexValue[index].ToString("X2"));
-            //indexValueToDevice = indexValue[index];
+            listDataRequest.Text += Convert.ToString(_indexValue[index].ToString("X2"));            
+        }
+
+        // Расчёт размера данных и контрольной суммы
+        private void CalcSizeDataAndCRC()
+        {
+            ushort sizeData = BinaryPrimitives.ReverseEndianness(SizeData(listDataRequest.Text));
+            packageRequest.Text += ((sizeData >> 8).ToString("X2") + " " + (sizeData & 0xFF).ToString("X2") + " ");
+            packageRequest.Text += dibus.CalculateCRC(packageRequest.Text);
+            packageRequest.Text += (listDataRequest.Text + " ");
+            packageRequest.Text += (dibus.CalculateCRC(listDataRequest.Text));
         }
 
         // Кнопка "Сформировать запрос" распределяющая выбранные параметры
         // запроса по полям "Заголовок запроса" и "Данные запроса"
         private void GenerateRequest_Click(object sender, EventArgs e)
         {
-            ushort sizeData = 0;
-
+            listDataRequest.Clear();
             TypePackageRequest_Load();
             CheckTypePackage_Click(generateRequest, e);
             CheckTypeData_Click(generateRequest, e);
             ListIndex_Click(generateRequest, e);
-            sizeData = BinaryPrimitives.ReverseEndianness(SizeData(listDataRequest.Text));
-            packageRequest.Text += ((sizeData >> 8).ToString("X2") + " " + (sizeData & 0xFF).ToString("X2") + " ");
-            packageRequest.Text += dibus.CalculateCRC(packageRequest.Text);
+            CalcSizeDataAndCRC();
         }
 
+        private byte[] ConvertStringDataToByte()
+        {
+            string[] tempData = packageRequest.Text.Split(' ');
+            for (int i = 0; i < (tempData.Length - 1); i++)
+            {
+                _packageForSend[i] = (byte)Convert.ToInt32(tempData[i], 16);
+            }
+            return _packageForSend;
+        }
         // Кнопка "Послать запрос"
         private void SendRequest_Click(object sender, EventArgs e)
         {
-            leftPanel.Text += ("Заголовок: " + packageRequest.Text + "\t" + DateTime.Now.ToString("T") + "\n");
-            leftPanel.Text += ("Данные: " + listDataRequest.Text + "\n");
-            //packageRequest.Clear();
-            //TypePackageRequest_Load(sendRequest, e);
-            //rightPanel.Text += dibus.UdmnDevice(addressRecipient, addressSender, typePackToDevice, typeDataInterfaceToDevice, indexValueToDevice, SizeData());
-            //rightPanel.Text += comPorts.port.Read();
-            comPorts.port.Write(packageRequest.Text);
-            rightPanel.Text += (sendDataFromDevice + "\n");
-            leftPanel.SaveFile("Результаты измерений.txt", RichTextBoxStreamType.PlainText);
-            leftPanel.Clear();
-            leftPanel.LoadFile("Результаты измерений.txt", RichTextBoxStreamType.PlainText);
+            try
+            {
+                if (comPorts.port.IsOpen == true)
+                {
+                    Thread transferData = new Thread(new ThreadStart(TransferData));
+                    transferData.Start();
+                }
+                else throw new Exception("Попробуйте воспользоваться кнопкой \"Подключить\"");
+            }
+            catch (Exception exc)
+            {
+                if (comPorts.port.IsOpen == false)
+                {
+                    MessageBox.Show("Соединение не установленно или отсутствует!\n" + exc.Message);
+                }
+            }
+        }
+
+        private void TransferData()
+        {
+            int count = 0;
+            while (count < Convert.ToInt32(setCount.Text))
+            {
+                comPorts.port.Write(ConvertStringDataToByte(), 0, ConvertStringDataToByte().Length);
+                leftPanel.Text += (packageRequest.Text + "\t" + DateTime.Now.ToString("T") + "\n");
+                rightPanel.Text += (_dataFromDevice + " " + DateTime.Now.ToString("T") + "\n");
+                _dataFromDevice = "";
+                Thread.Sleep(1000);
+                count++;
+            }
+            rightPanel.SaveFile("Результаты измерений.txt", RichTextBoxStreamType.PlainText);
+            rightPanel.LoadFile("Результаты измерений.txt", RichTextBoxStreamType.PlainText);
+
         }
 
         // Размер данных
-        private ushort SizeData(string sizeHead)
+        private static ushort SizeData(string sizeHead)
         {
             ushort sizeData = 0;
             for (int i = 0; i < sizeHead.Length; i++)
@@ -219,6 +246,6 @@ namespace UdmnTransfer
                 sizeData++;
             }
             return sizeData /= 2;
-        }        
+        }
     }
 }

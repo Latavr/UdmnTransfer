@@ -44,17 +44,25 @@
             this.listDataRequest = new System.Windows.Forms.TextBox();
             this.typeData = new System.Windows.Forms.Label();
             this.typePackage = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.stopRequest = new System.Windows.Forms.Button();
+            this.setCount = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkCOMPort
             // 
-            this.checkCOMPort.BackColor = System.Drawing.SystemColors.Control;
-            this.checkCOMPort.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkCOMPort.Location = new System.Drawing.Point(12, 12);
+            this.checkCOMPort.BackColor = System.Drawing.Color.Red;
+            this.checkCOMPort.ForeColor = System.Drawing.Color.White;
+            this.checkCOMPort.Location = new System.Drawing.Point(10, 12);
             this.checkCOMPort.Name = "checkCOMPort";
             this.checkCOMPort.Size = new System.Drawing.Size(109, 23);
             this.checkCOMPort.TabIndex = 0;
-            this.checkCOMPort.Text = "Соединение";
+            this.checkCOMPort.Text = "Подключить";
             this.checkCOMPort.UseVisualStyleBackColor = false;
             this.checkCOMPort.Click += new System.EventHandler(this.CheckCOMPort_Click);
             // 
@@ -78,12 +86,13 @@
             // 
             // leftPanel
             // 
-            this.leftPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.leftPanel.Location = new System.Drawing.Point(9, 386);
+            this.leftPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.leftPanel.Location = new System.Drawing.Point(3, 3);
             this.leftPanel.MinimumSize = new System.Drawing.Size(384, 286);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(384, 469);
+            this.leftPanel.Size = new System.Drawing.Size(426, 411);
             this.leftPanel.TabIndex = 4;
             this.leftPanel.Text = "";
             // 
@@ -92,10 +101,10 @@
             this.rightPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rightPanel.Location = new System.Drawing.Point(397, 386);
+            this.rightPanel.Location = new System.Drawing.Point(6, 3);
             this.rightPanel.MinimumSize = new System.Drawing.Size(384, 286);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(561, 468);
+            this.rightPanel.Size = new System.Drawing.Size(433, 411);
             this.rightPanel.TabIndex = 5;
             this.rightPanel.Text = "";
             // 
@@ -112,9 +121,9 @@
             // 
             // packageRequest
             // 
-            this.packageRequest.Location = new System.Drawing.Point(12, 241);
+            this.packageRequest.Location = new System.Drawing.Point(10, 241);
             this.packageRequest.Name = "packageRequest";
-            this.packageRequest.Size = new System.Drawing.Size(236, 23);
+            this.packageRequest.Size = new System.Drawing.Size(338, 23);
             this.packageRequest.TabIndex = 7;
             // 
             // headerRequest
@@ -149,7 +158,7 @@
             // 
             this.indexData.AutoSize = true;
             this.indexData.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.indexData.Location = new System.Drawing.Point(14, 131);
+            this.indexData.Location = new System.Drawing.Point(10, 131);
             this.indexData.Name = "indexData";
             this.indexData.Size = new System.Drawing.Size(107, 17);
             this.indexData.TabIndex = 12;
@@ -158,7 +167,7 @@
             // generateRequest
             // 
             this.generateRequest.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.generateRequest.Location = new System.Drawing.Point(14, 182);
+            this.generateRequest.Location = new System.Drawing.Point(10, 182);
             this.generateRequest.Name = "generateRequest";
             this.generateRequest.Size = new System.Drawing.Size(234, 27);
             this.generateRequest.TabIndex = 13;
@@ -178,9 +187,9 @@
             // 
             // listDataRequest
             // 
-            this.listDataRequest.Location = new System.Drawing.Point(12, 301);
+            this.listDataRequest.Location = new System.Drawing.Point(10, 301);
             this.listDataRequest.Name = "listDataRequest";
-            this.listDataRequest.Size = new System.Drawing.Size(109, 23);
+            this.listDataRequest.Size = new System.Drawing.Size(115, 23);
             this.listDataRequest.TabIndex = 15;
             this.listDataRequest.VisibleChanged += new System.EventHandler(this.Index_Load);
             // 
@@ -188,7 +197,7 @@
             // 
             this.typeData.AutoSize = true;
             this.typeData.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.typeData.Location = new System.Drawing.Point(14, 95);
+            this.typeData.Location = new System.Drawing.Point(10, 93);
             this.typeData.Name = "typeData";
             this.typeData.Size = new System.Drawing.Size(84, 17);
             this.typeData.TabIndex = 16;
@@ -198,17 +207,68 @@
             // 
             this.typePackage.AutoSize = true;
             this.typePackage.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.typePackage.Location = new System.Drawing.Point(14, 55);
+            this.typePackage.Location = new System.Drawing.Point(10, 53);
             this.typePackage.Name = "typePackage";
             this.typePackage.Size = new System.Drawing.Size(77, 17);
             this.typePackage.TabIndex = 17;
             this.typePackage.Text = "Тип пакета";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(10, 379);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.leftPanel);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.rightPanel);
+            this.splitContainer1.Size = new System.Drawing.Size(875, 421);
+            this.splitContainer1.SplitterDistance = 432;
+            this.splitContainer1.TabIndex = 18;
+            // 
+            // stopRequest
+            // 
+            this.stopRequest.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.stopRequest.Location = new System.Drawing.Point(173, 349);
+            this.stopRequest.Name = "stopRequest";
+            this.stopRequest.Size = new System.Drawing.Size(75, 23);
+            this.stopRequest.TabIndex = 19;
+            this.stopRequest.Text = "Стоп";
+            this.stopRequest.UseVisualStyleBackColor = true;
+            // 
+            // setCount
+            // 
+            this.setCount.Location = new System.Drawing.Point(173, 301);
+            this.setCount.Name = "setCount";
+            this.setCount.Size = new System.Drawing.Size(75, 23);
+            this.setCount.TabIndex = 20;
+            this.setCount.Text = "1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(162, 281);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 17);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Цикл запросов";
+            // 
             // Udmn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(967, 865);
+            this.ClientSize = new System.Drawing.Size(895, 805);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.setCount);
+            this.Controls.Add(this.stopRequest);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.typePackage);
             this.Controls.Add(this.typeData);
             this.Controls.Add(this.listDataRequest);
@@ -220,13 +280,15 @@
             this.Controls.Add(this.headerRequest);
             this.Controls.Add(this.packageRequest);
             this.Controls.Add(this.sendRequest);
-            this.Controls.Add(this.rightPanel);
-            this.Controls.Add(this.leftPanel);
             this.Controls.Add(this.listTypePackage);
             this.Controls.Add(this.listCOMPorts);
             this.Controls.Add(this.checkCOMPort);
             this.Name = "Udmn";
             this.Text = "УДМН-100";
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +312,9 @@
         private TextBox listDataRequest;
         private Label typeData;
         private Label typePackage;
+        private SplitContainer splitContainer1;
+        private Button stopRequest;
+        private TextBox setCount;
+        private Label label1;
     }
 }
